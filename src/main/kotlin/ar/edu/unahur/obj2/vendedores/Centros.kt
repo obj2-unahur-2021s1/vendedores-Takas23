@@ -11,7 +11,7 @@ class Centro(val ciudad: Ciudad) {
         } else throw Exception("El vendedor ya esta incluido")
     }
 
-    //mal, revisar
+//mal, revisar
     fun vendedorEstrella() =
         vendedores.map { v -> v.puntajeCertificaciones() }.max()
 
