@@ -4,6 +4,8 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.booleans.shouldNotBeFalse
+import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.shouldBe
 
 class VendedorTest : DescribeSpec({
   val misiones = Provincia(1300000)
@@ -116,8 +118,8 @@ class VendedorTest : DescribeSpec({
     val viajante3 = Viajante(listOf(bsAs))
     val centro1 = Centro(buenosAires)
 
-    fijo1.agregarCertificacion(certG1)
-    viajante1.agregarCertificacion(certG2)
+    fijo1.agregarCertificacion(certP1)
+    viajante1.agregarCertificacion(certP2)
     fijo2.agregarCertificacion(certG1)
     fijo2.agregarCertificacion(certG2)
     fijo2.agregarCertificacion(certP1)
@@ -133,11 +135,35 @@ class VendedorTest : DescribeSpec({
     viajante3.agregarCertificacion(certG3)
 
 
-
-    describe("vendedor estrella") {
-      it("viajante3 35pts") {
-        centro1.
+    describe("vendedores") {
+      centro1.agregarVendedor(fijo1)
+      centro1.agregarVendedor(fijo2)
+      centro1.agregarVendedor(viajante1)
+      centro1.agregarVendedor(viajante3)
+/*
+      it("estrella viajante3 35pts") {
+        centro1.vendedorEstrella().shouldBe(viajante3)
       }
+*/
+      it("puede cubrir") {
+        centro1.puedeCubrir(villaDolores).shouldBeTrue()
+      }
+      it("no puede cubrir") {
+        centro1.puedeCubrir(obera).shouldBeFalse()
+      }
+
+      it("vendedores genericos") {
+        centro1.vendedoresGenericos().shouldContainAll(fijo2,viajante3)
+      }
+
+      it("no es Robusto, 2 firmes") {
+        centro1.esRobusto().shouldBeFalse()
+      }
+      it("es robusto, agregado 1 firme") {
+        centro1.agregarVendedor(viajante2)
+        centro1.esRobusto().shouldBeTrue()
+      }
+
     }
   }
 })

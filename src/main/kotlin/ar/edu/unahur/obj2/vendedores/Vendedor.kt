@@ -61,4 +61,3 @@ class ComercioCorresponsal(val ciudades: List<Ciudad>) : Vendedor() {
   (ciudades.size >= 5) or (ciudades.map { c -> c.provincia }.toSet().size >= 3)
 
 }
-
